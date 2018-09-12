@@ -1,0 +1,34 @@
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@WebServlet(name = "SignUpServlet",urlPatterns = "/SignUp")
+public class SignUpServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out =response.getWriter();
+        String firstName=request.getParameter("firstName");
+        String lastName=request.getParameter("lastName");
+        String email=request.getParameter("email");
+        if(Server.getUsers().containsKey(firstName+"/./"+lastName)){
+            if(email.equals(Server.getUsers().get(firstName+"/./"+lastName))){
+                out.println("<h1>恭喜您成功登录！</h1>");
+            }
+            else{
+                out.println("<h1>您输入的用户名或邮件有误，登陆失败！</h1>");
+            }
+
+        }
+        else {
+            out.println("<h1>您输入的用户名或邮件有误，登陆失败！</h1>");
+        }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+}
